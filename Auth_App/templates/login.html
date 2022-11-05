@@ -14,7 +14,10 @@
         <input type="text" name="roll">
         <label for="password">Password</label>
         <input type="password" name="password">
-        <button>Submit</button>
+        <button type="submit">Submit</button>
+    </form>
+    <form action="{% url 'register'%}" method="GET">
+        <button>Register</button>
     </form>
     
 </body>

@@ -55,7 +55,7 @@ ROOT_URLCONF = 'ActivityManager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['ActivityManager/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
