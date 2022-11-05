@@ -15,10 +15,7 @@ def home(request):
             for act in activity :
                 activities.append(act)
         print(activities)
-        for i in range(0,len(activities)):
-            for j in range(i,len(activities)):
-                if(activities[i].date_time > activities[j].date_time):
-                    activities[i],activities[j] = activities[j],activities[i]
+        activities.sort(key=lambda x: x.date_time)
         return render(request, 'home.html',{'User':request.user,'Activities':activities})
     else:
         return redirect(v.user_login)
