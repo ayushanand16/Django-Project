@@ -13,7 +13,21 @@
             <h3>Activities </h3>
             <ul>
             {% for activity in Activities %}
-            <li> {{ activity.title }} {{activity.date_time}} {{activity.Club}}<br><p>{{activity.act}}</p> </li>
+            <li> {{ activity.title }} 
+                {{activity.date_time}} 
+                {{activity.Club}}
+                <br>
+                <p>{{activity.act}}</p> 
+                <p>
+                    {% if activity.date_time == now %}
+                     TODAY
+                    {% elif activity.date_time.date > now %}
+                     UPCOMING
+                    {% else %}
+                     PASSED
+                     {% endif %}
+                </p>
+            </li>
             {% endfor %}
             </ul>
 

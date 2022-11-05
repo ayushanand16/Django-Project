@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from Auth_App import views as v
 from Auth_App.models import Student
 from .models import Activity, Club_Student_List 
+import datetime
 
 def home(request):
     if request.user.is_authenticated :
@@ -16,6 +17,6 @@ def home(request):
                 activities.append(act)
         print(activities)
         activities.sort(key=lambda x: x.date_time)
-        return render(request, 'home.html',{'User':request.user,'Activities':activities})
+        return render(request, 'home.html',{'User':request.user,'Activities':activities,'now':datetime.date.today()})
     else:
         return redirect(v.user_login)
