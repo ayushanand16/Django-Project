@@ -3,6 +3,7 @@ from .models import Branch, Hostel,Student
 from django.contrib.auth.models import User, auth
 from django.db import IntegrityError
 from django.utils.datastructures import MultiValueDictKeyError
+from ActivityManager import views as v
 
 
 
@@ -10,11 +11,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 # Create your views here.
 
 
-def index(request):
-    if request.user.is_authenticated :
-        return HttpResponse('Welcome '+request.user.username)
-    else:
-        return redirect(user_login)
+
 
     
 
@@ -27,7 +24,7 @@ def user_login(request):
         user = auth.authenticate(username=username,password=password)
         if user is not None:
             auth.login(request,user)
-            return redirect(index)
+            return redirect(v.home)
         else:
             return HttpResponse('Wrong Credentials')
     else:
