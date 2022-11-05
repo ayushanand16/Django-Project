@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Register</h1>
-    <form method="post">
+    <form method="post" action="{% url 'register' %}">
         {% csrf_token %}
         <label for="fname">First Name</label>
         <input type="text" name="fname">
@@ -23,7 +23,7 @@
         <select name="branch" id="branch">
             <option selected disabled>--Choose Branch Name--</option>
             {% for i in branch %}
-            <option value={{ i }}>{{ i }}</option>
+            <option value={{ i.branch_id }}>{{ i }}</option>
             {% endfor %}
         </select>
         <br>
@@ -31,7 +31,7 @@
         <select name="hostel" id="hostel">
             <option selected disabled>--Choose Hostel Name--</option>
             {% for i in hostel %}
-            <option value={{ i }}>{{ i }}</option>
+            <option value={{ i.hostel_id }}>{{ i }}</option>
             {% endfor %}
         </select>
         <br>
@@ -49,8 +49,8 @@
         <button type="submit">Submit</button>
         <br>
     </form>
-    <form action="{% url 'login'%}" method="GET">
-        <button>Login</button>
-    </form>
+    
+        <button><a href="{% url 'login' %}">Login</button>
+
 </body>
 </html>

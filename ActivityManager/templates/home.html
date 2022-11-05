@@ -8,8 +8,8 @@
 </head>
 <body>
     <h1>Welcome {{User.first_name}} {{User.last_name}}</h1>
-    <form action="{% url 'logout' %}">
-        <button>Logout</button>
-    </form>
+
+        <button><a href="{% url 'logout' %}">Logout</button>
+
 </body>
 </html>

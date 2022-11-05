@@ -17,7 +17,7 @@ from ActivityManager import views as v
 
 def user_login(request):
     if request.user.is_authenticated :
-        return redirect(index)
+        return redirect(v.home)
     if request.method == 'POST':
         username = request.POST['roll']
         password = request.POST.get('password')
@@ -36,26 +36,31 @@ def user_login(request):
 
 def user_register(request):
     if request.user.is_authenticated :
-        return redirect(index)
+        return redirect(v.home)
     if request.method == 'POST':
-        # branch=request.POST['branch']
+        branch=Branch.objects.get(branch_id=request.POST['branch'])
+        #print(branch)
         first_name=request.POST['fname']
+        #print(first_name)
         last_name=request.POST['lname']
         roll=request.POST['roll']
-        # hostel=request.POST['hostel']
+        hostel=Hostel.objects.get(hostel_id=request.POST['hostel'])
         room=request.POST['room']
         phone=request.POST['phone']
         email=request.POST['email']
         password = request.POST.get('password')
+
         try:
             user = User.objects.create_user(username=roll, password=password, first_name=first_name, last_name=last_name, email=email)
             if user:
                 user.save()
-                return redirect("/")
+                student = Student(name=first_name+' '+last_name,roll_no=roll,branch=branch,email=email,hostel=hostel,room_no=room,phone_number=phone)
+                student.save()
+                #print(student)
         except IntegrityError:
             return HttpResponse('Username taken')
         except :
-            redirect('/')
+             redirect('/')
     branch = Branch.objects.all()
     hostel = Hostel.objects.all()
     context = {'branch':branch,'hostel':hostel}
