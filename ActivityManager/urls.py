@@ -22,5 +22,7 @@ urlpatterns = [
     path('',views.home,name='home'),
     path('',include('Auth_App.urls')),
     path('create/',views.create, name='create'),
-    path('self/',views.self,name='self')
+    path('self/',views.self,name='self'),
+    path('profile/',views.profile,name='profile'),
+    path('edit/',views.edit,name='edit'),
 ]

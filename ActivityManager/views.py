@@ -1,7 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from Auth_App import views as v
-from Auth_App.models import Student
+from Auth_App.models import Student, Hostel
 from .models import Activity, Club_Student_List, Venue, Club, SelfActivtiy
+from django.contrib.auth.decorators import login_required
 import datetime
 
 def home(request):
@@ -51,6 +52,35 @@ def create(request):
         return redirect(v.user_login)
 
 def self(request):
-    student = Student.objects.get(roll_no=request.user.username)
-    selfacts = SelfActivtiy.objects.filter(Student=student).order_by('date_time')
-    return render(request,'self.html',{'selfacts':selfacts,'User':request.user,'now':datetime.date.today()})
+    if request.user.is_authenticated :
+        student = Student.objects.get(roll_no=request.user.username)
+        selfacts = SelfActivtiy.objects.filter(Student=student).order_by('date_time')
+        return render(request,'self.html',{'selfacts':selfacts,'User':request.user,'now':datetime.date.today()})
+    else:
+        return redirect(v.user_login)
+
+def profile(request):
+    if request.user.is_authenticated :
+        student = Student.objects.get(roll_no=request.user.username)
+        return render(request,'profiles.html',{'user':student})
+    else :
+        return redirect(v.user_login)
+
+def edit(request):
+    if request.user.is_authenticated :
+        if request.method == 'POST':
+            hostel = Hostel.objects.get(hostel_id=request.POST['hostel'])
+            room_no = request.POST['room']
+            phone = request.POST['phone']
+            email = request.POST['email']
+            student = Student.objects.get(roll_no=request.user.username)
+            student.hostel = hostel
+            student.room_no = room_no
+            student.phone_number = phone
+            student.email = email
+            student.save()
+            return redirect(profile)
+        else :
+            student = Student.objects.get(roll_no=request.user.username)
+            hostel = Hostel.objects.all()
+            return render(request,'edit.html',{'user':student,'hostel':hostel})

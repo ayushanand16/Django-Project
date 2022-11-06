@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.username}}</title>
+</head>
+<body>
+    <div class = "info">
+        <ul>
+            <li>Name = {{user.name}}</li>
+            <li>Branch = {{user.branch.branch_name}}</li>
+            <li>Roll = {{user.roll_no}}</li>
+            <li>Hostel = {{user.hostel.hostel_name}}</li>
+            <li>Room No. = {{user.room_no}}</li>
+            <li>Email = {{user.email}}</li>
+            <li>Phone = {{user.phone_number}}</li>
+        </ul>
+    <button><a href="{% url 'self' %}">Self Activity</a></button>
+    <button><a href="{% url 'edit' %}">Edit Profile Details</a></button>
+    <button><a href="{% url 'home' %}">College Activity</a></button>
+    <button><a href="{% url 'logout' %}">Logout</button>
+       
+    </div>
+   
+
+</body>
+</html>

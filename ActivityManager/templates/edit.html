@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+</head>
+<body>
+    <div name="edit">
+        <form method="post" >
+            {% csrf_token %}
+            <label for="hostel">Hostel</label>
+            <select name="hostel" id="hostel">
+                <option selected disabled>--Choose Hostel Name--</option>
+                {% for i in hostel %}
+                <option value={{ i.hostel_id }}>{{ i }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="room">Room No</label>
+            <input type="number" name="room" value="{{user.room_no}}">
+            <br>
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" value="{{user.phone_number}}">
+            <br>
+            <label for="email">Email</label>
+            <input type="email" name="email" value="{{user.email}}">
+            <br>
+            <button type="submit">Submit</button>
+            <br>
+        </form>
+    </div>
+</body>
+</html>
