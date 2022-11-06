@@ -12,7 +12,7 @@
 
             <h3>Activities </h3>
             <ul>
-            {% for activity in Activities %}
+            {% for activity in selfacts %}
             <li> {{ activity.title }} 
                 {{activity.date_time}} 
                 {{activity.Club}}
@@ -33,7 +33,7 @@
 
         </p>
         <button><a href="{% url 'create' %}">Create Activity</a></button>
-        <button><a href="{% url 'self' %}">Self Activity</a></button>
+        <button><a href="{% url 'home' %}">College Activity</a></button>
         <button><a href="{% url 'logout' %}">Logout</button>
 
 </body>

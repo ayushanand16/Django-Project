@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Activity</title>
+</head>
+<body>
+    <h1>Create Activity</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="club">Club of Event</label>
+        <select name="club">
+            <option value="self">Self Activity</option>
+            {% for club in clubs %}
+            <option value="{{club.club_id}}">{{club}}</option>
+            {% endfor %}
+        </select>
+        <label for="title">Title</label>
+        <input type="text" name="title">
+        <label for="act">Activity</label>
+        <input type="text" name="act">
+        <label for="venue">Venue</label>
+        <select name="venue">
+            <option value="self">Self Activtiy</option>
+            {% for venue in venues %}
+            <option value="{{ venue.venue_Id}}">{{venue}}</option>
+            {% endfor %}
+        </select>
+        <label for="date">Date and Time</label>
+        <input type="datetime-local" name="date">
+        <button type="submit">Submit</button>
+    </form>
+    <p>Note:Only those clubs are listed for which user has the right to create any activity. Each user can create a self activity </p>
+    <button><a href="{% url 'self' %}">Self Activity</a></button>
+    <button><a href="{% url 'home' %}">College Activity</a></button>
+    <button><a href="{% url 'logout' %}">Logout</button>
+</body>
+</html>

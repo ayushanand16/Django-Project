@@ -34,4 +34,13 @@ class Activity(models.Model):
     def __str__(self):
         return '{} {}'.format(self.title,self.date_time)
 
+class SelfActivtiy(models.Model):
+    Student = models.ForeignKey(Student,on_delete=models.CASCADE)
+    title = models.CharField(max_length=20)
+    act = models.CharField(max_length=200)
+    date_time = models.DateTimeField()
+
+    def __str__(self):
+        return '{} {}'.format(self.title,self.date_time) 
+
 
