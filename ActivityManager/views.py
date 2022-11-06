@@ -33,13 +33,13 @@ def create(request):
                 student = Student.objects.get(roll_no=request.user.username)
                 selfact = SelfActivtiy(Student=student,title=title,act=act,date_time=datetime)
                 selfact.save()
-                return render(request,self)
+                return redirect(self)
             else :
                 club_of_activity = Club.objects.get(club_id=club)
                 venue_of_activity = Venue.objects.get(venue_Id=venue)
-                clubact = Activity(club=club_of_activity,title=title,act=act,datetime=datetime,venue=venue_of_activity)
+                clubact = Activity(Club=club_of_activity,title=title,act=act,date_time=datetime,Venue=venue_of_activity)
                 clubact.save()
-                return render(request,home)
+                return redirect(home)
             
         else :
             venues = Venue.objects.all()
