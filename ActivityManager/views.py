@@ -62,7 +62,14 @@ def self(request):
 def profile(request):
     if request.user.is_authenticated :
         student = Student.objects.get(roll_no=request.user.username)
-        return render(request,'profiles.html',{'user':student})
+        clubs = Club_Student_List.objects.filter(student=student)
+        activities = []
+        for club in clubs :
+            activity = Activity.objects.filter(Club=club.club)
+            for act in activity :
+                activities.append(act)
+        selfacts = SelfActivtiy.objects.filter(Student=student)
+        return render(request,'profiles.html',{'user':student,'self':len(selfacts),'act':len(activities),'club':len(clubs)})
     else :
         return redirect(v.user_login)
 

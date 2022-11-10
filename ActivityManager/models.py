@@ -1,6 +1,6 @@
 from django.db import models
 from Auth_App.models import Student
-
+from django.contrib.auth.models import User
 
 class Venue(models.Model):
     venue_Id = models.IntegerField(primary_key=True)
@@ -43,4 +43,7 @@ class SelfActivtiy(models.Model):
     def __str__(self):
         return '{} {}'.format(self.title,self.date_time) 
 
+
+class Theme(models.Model):
+    theme = models.BooleanField(default=True)
 

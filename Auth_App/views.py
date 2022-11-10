@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.db import IntegrityError
 from django.utils.datastructures import MultiValueDictKeyError
 from ActivityManager import views as v
+from ActivityManager.models import Theme
 
 
 
@@ -28,7 +29,8 @@ def user_login(request):
         else:
             return HttpResponse('Wrong Credentials')
     else:
-        return render(request, 'login.html')
+        
+        return render(request, 'login.html',)
 
 
     
