@@ -25,5 +25,7 @@ urlpatterns = [
     path('self/',views.self,name='self'),
     path('profile/',views.profile,name='profile'),
     path('edit/',views.edit,name='edit'),
-    path("__reload__/",include("django_browser_reload.urls"))
+    path('search/',views.search,name='search'),
+    path("__reload__/",include("django_browser_reload.urls")),
+    
 ]

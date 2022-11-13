@@ -22,6 +22,7 @@ class Hostel(models.Model):
 
 class Student(models.Model):
     name = models.CharField(max_length=50)
+    #avatar=models.ImageField(upload_to='pics',blank=True)
     roll_no = models.IntegerField(primary_key=True)
     branch = models.ForeignKey('Branch',on_delete=models.CASCADE)
     email = models.CharField(max_length=30)

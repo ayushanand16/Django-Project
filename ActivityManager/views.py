@@ -10,15 +10,18 @@ def home(request):
         student = Student.objects.get(roll_no=request.user.username)
         print(student)
         clubs = Club_Student_List.objects.filter(student=student)
+        club_name = []
         print(clubs)
         activities = []
         for club in clubs :
             activity = Activity.objects.filter(Club=club.club)
+            club_name.append(club.club)
             for act in activity :
                 activities.append(act)
         print(activities)
         activities.sort(key=lambda x: x.date_time)
-        return render(request, 'home.html',{'User':request.user,'Activities':activities,'now':datetime.date.today()})
+        search = False
+        return render(request, 'home.html',{'User':request.user,'Activities':activities,'now':datetime.date.today(),'clubs':club_name,'search':search})
     else:
         return redirect(v.user_login)
 
@@ -91,3 +94,21 @@ def edit(request):
             student = Student.objects.get(roll_no=request.user.username)
             hostel = Hostel.objects.all()
             return render(request,'edit.html',{'user':student,'hostel':hostel})
+
+def search(request):
+    if request.user.is_authenticated :
+        if request.method=='POST':
+            club_name=request.POST.get('club_name')
+            print(club_name)
+            activities=Activity.objects.filter(Club=club_name)
+            student = Student.objects.get(roll_no=request.user.username)
+            clubs=Club_Student_List.objects.filter(student=student)
+            club_list = []
+            for club in clubs:
+                club_list.append(club.club)
+            search = True
+            return render(request, 'home.html',{'User':request.user,'clubs':club_list,'Activities':activities,'now':datetime.date.today(),'search':search})
+        else:
+            return redirect(home)
+    else :
+        return redirect(v.user_login)
