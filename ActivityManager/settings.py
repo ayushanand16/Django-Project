@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,7 +42,9 @@ INSTALLED_APPS = [
     'ActivityManager',
     'tailwind',
     'theme',
-    'django_browser_reload'
+    'django_browser_reload',
+    'pages'
+    
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -65,7 +68,7 @@ ROOT_URLCONF = 'ActivityManager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['ActivityManager/templates'],
+        'DIRS': ['ActivityManager/templates','pages/template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,9 +90,9 @@ WSGI_APPLICATION = 'ActivityManager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ITW_Project',
+        'NAME': 'DjangoProjects',
         'USER': 'root',
-        'PASSWORD':'Ayush@123',
+        'PASSWORD':'Krishna2208@',
         'HOST':'localhost',
         'PORT':'3306',
     }
@@ -137,6 +140,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

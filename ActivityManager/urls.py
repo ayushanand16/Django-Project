@@ -16,14 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from ActivityManager import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.home,name='home'),
+    path('home/',views.home,name='home'),
     path('',include('Auth_App.urls')),
     path('create/',views.create, name='create'),
     path('self/',views.self,name='self'),
     path('profile/',views.profile,name='profile'),
     path('edit/',views.edit,name='edit'),
-    path("__reload__/",include("django_browser_reload.urls"))
-]
+    path('search/',views.search,name='search'),
+    path('', include('pages.urls')),
+    path("__reload__/",include("django_browser_reload.urls")),
+    
+    
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

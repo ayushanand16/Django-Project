@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.db import IntegrityError
 from django.utils.datastructures import MultiValueDictKeyError
 from ActivityManager import views as v
-from ActivityManager.models import Theme
+from ActivityManager.models import Theme, ProPic
 
 
 
@@ -51,6 +51,9 @@ def user_register(request):
         phone=request.POST['phone']
         email=request.POST['email']
         password = request.POST.get('password')
+        pic = request.FILES.get('image')
+        print(request.FILES)
+
 
         try:
             user = User.objects.create_user(username=roll, password=password, first_name=first_name, last_name=last_name, email=email)
@@ -58,6 +61,8 @@ def user_register(request):
                 user.save()
                 student = Student(name=first_name+' '+last_name,roll_no=roll,branch=branch,email=email,hostel=hostel,room_no=room,phone_number=phone)
                 student.save()
+                Pic = ProPic(student=student,propic=pic)
+                Pic.save()
                 #print(student)
         except IntegrityError:
             return HttpResponse('Username taken')

@@ -27,6 +27,19 @@
         </p> -->
         
         <!-- component -->
+        {% if search is False%}
+        <div>
+            <form method="POST" action="search/">
+            {% csrf_token %}
+                <select name="club_name" id="club_name">
+                    {% for club in clubs %}
+                    <option value={{club.club_id}}>{{club}}</option>
+                    {% endfor %}
+                  </select>
+            <button>search</button>
+            </form>
+        </div>
+        {% endif %}
                 <div class="flex flex-wrap space-x-3 space-y-3">
                     {% for activity in Activities %}
   

@@ -1,24 +1,28 @@
 from django.shortcuts import render, HttpResponse, redirect
 from Auth_App import views as v
 from Auth_App.models import Student, Hostel
-from .models import Activity, Club_Student_List, Venue, Club, SelfActivtiy
+from .models import Activity, Club_Student_List, Venue, Club, SelfActivtiy, ProPic
 from django.contrib.auth.decorators import login_required
 import datetime
+import os
 
 def home(request):
     if request.user.is_authenticated :
         student = Student.objects.get(roll_no=request.user.username)
         print(student)
         clubs = Club_Student_List.objects.filter(student=student)
+        club_name = []
         print(clubs)
         activities = []
         for club in clubs :
             activity = Activity.objects.filter(Club=club.club)
+            club_name.append(club.club)
             for act in activity :
                 activities.append(act)
         print(activities)
         activities.sort(key=lambda x: x.date_time)
-        return render(request, 'home.html',{'User':request.user,'Activities':activities,'now':datetime.date.today()})
+        search = False
+        return render(request, 'home.html',{'User':request.user,'Activities':activities,'now':datetime.date.today(),'clubs':club_name,'search':search})
     else:
         return redirect(v.user_login)
 
@@ -69,7 +73,9 @@ def profile(request):
             for act in activity :
                 activities.append(act)
         selfacts = SelfActivtiy.objects.filter(Student=student)
-        return render(request,'profiles.html',{'user':student,'self':len(selfacts),'act':len(activities),'club':len(clubs)})
+        propic = ProPic.objects.get(student=student)
+        piclink = propic.propic.url
+        return render(request,'profiles.html',{'user':student,'self':len(selfacts),'act':len(activities),'club':len(clubs),'pic':piclink})
     else :
         return redirect(v.user_login)
 
@@ -85,9 +91,36 @@ def edit(request):
             student.room_no = room_no
             student.phone_number = phone
             student.email = email
+            Pic = ProPic.objects.get(student=student)
+            location = "C:/Users/91797/Desktop/hello world/Django-Project"
+            print(location)
+            path = location+Pic.propic.url
+            print(path)
+            #os.remove(path)
+            student.propic = request.FILES.get('image')
+            print('hi')
+            print(student.propic)
             student.save()
             return redirect(profile)
         else :
             student = Student.objects.get(roll_no=request.user.username)
             hostel = Hostel.objects.all()
             return render(request,'edit.html',{'user':student,'hostel':hostel})
+
+def search(request):
+    if request.user.is_authenticated :
+        if request.method=='POST':
+            club_name=request.POST.get('club_name')
+            print(club_name)
+            activities=Activity.objects.filter(Club=club_name)
+            student = Student.objects.get(roll_no=request.user.username)
+            clubs=Club_Student_List.objects.filter(student=student)
+            club_list = []
+            for club in clubs:
+                club_list.append(club.club)
+            search = True
+            return render(request, 'home.html',{'User':request.user,'clubs':club_list,'Activities':activities,'now':datetime.date.today(),'search':search})
+        else:
+            return redirect(home)
+    else :
+        return redirect(v.user_login)

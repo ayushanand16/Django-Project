@@ -35,3 +35,6 @@ class Student(models.Model):
 
 
 
+
+
+
