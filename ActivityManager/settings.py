@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'ActivityManager',
     'tailwind',
     'theme',
-    'django_browser_reload'
+    'django_browser_reload',
+    'pages'
+    
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -66,7 +68,7 @@ ROOT_URLCONF = 'ActivityManager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['ActivityManager/templates'],
+        'DIRS': ['ActivityManager/templates','pages/template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,7 +90,7 @@ WSGI_APPLICATION = 'ActivityManager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'itw_project',
+        'NAME': 'DjangoProjects',
         'USER': 'root',
         'PASSWORD':'Krishna2208@',
         'HOST':'localhost',
@@ -139,6 +141,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 

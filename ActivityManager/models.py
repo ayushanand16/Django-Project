@@ -47,3 +47,6 @@ class SelfActivtiy(models.Model):
 class Theme(models.Model):
     theme = models.BooleanField(default=True)
 
+class ProPic(models.Model):
+    student = models.ForeignKey(Student,on_delete=models.CASCADE)
+    propic = models.ImageField(upload_to="propic/images",default="")

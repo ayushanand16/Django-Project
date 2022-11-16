@@ -1,9 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
 from Auth_App import views as v
 from Auth_App.models import Student, Hostel
-from .models import Activity, Club_Student_List, Venue, Club, SelfActivtiy
+from .models import Activity, Club_Student_List, Venue, Club, SelfActivtiy, ProPic
 from django.contrib.auth.decorators import login_required
 import datetime
+import os
 
 def home(request):
     if request.user.is_authenticated :
@@ -72,7 +73,9 @@ def profile(request):
             for act in activity :
                 activities.append(act)
         selfacts = SelfActivtiy.objects.filter(Student=student)
-        return render(request,'profiles.html',{'user':student,'self':len(selfacts),'act':len(activities),'club':len(clubs)})
+        propic = ProPic.objects.get(student=student)
+        piclink = propic.propic.url
+        return render(request,'profiles.html',{'user':student,'self':len(selfacts),'act':len(activities),'club':len(clubs),'pic':piclink})
     else :
         return redirect(v.user_login)
 
@@ -88,6 +91,15 @@ def edit(request):
             student.room_no = room_no
             student.phone_number = phone
             student.email = email
+            Pic = ProPic.objects.get(student=student)
+            location = "C:/Users/91797/Desktop/hello world/Django-Project"
+            print(location)
+            path = location+Pic.propic.url
+            print(path)
+            #os.remove(path)
+            student.propic = request.FILES.get('image')
+            print('hi')
+            print(student.propic)
             student.save()
             return redirect(profile)
         else :

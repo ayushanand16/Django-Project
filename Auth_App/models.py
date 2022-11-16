@@ -22,7 +22,6 @@ class Hostel(models.Model):
 
 class Student(models.Model):
     name = models.CharField(max_length=50)
-    #avatar=models.ImageField(upload_to='pics',blank=True)
     roll_no = models.IntegerField(primary_key=True)
     branch = models.ForeignKey('Branch',on_delete=models.CASCADE)
     email = models.CharField(max_length=30)
@@ -32,6 +31,9 @@ class Student(models.Model):
     phone_number = models.CharField(validators=[phone_regex], max_length=17, default='+91') # Validators should be a list
     def __str__(self):
         return "{} {}".format(self.roll_no, self.name)
+
+
+
 
 
 
